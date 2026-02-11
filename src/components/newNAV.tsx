@@ -114,7 +114,7 @@ export default function Nav() {
         {/* Brand (use RouteTransition for fade-out, but keep Link for prefetch) */}
         <Link
           href="/"
-          className={`site-title text-lg font-semibold tracking-tight ${
+          className={`text-lg font-semibold tracking-tight ${
             isTransitioning ? "pointer-events-none opacity-60" : ""
           }`}
           onClick={(e) => {

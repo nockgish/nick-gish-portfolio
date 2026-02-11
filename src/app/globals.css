@@ -65,15 +65,16 @@ h3 {
 div h2 {
 color: #eee;
     text-shadow: 0 0 2px #0000008a;
-    font-size: 2rem;
+    font-size: 1.65rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-top: 2rem;
-    font-family: var(--font-heading);
+    font-family: var(--font-oswald);
     border-bottom: 1px solid #ffffff57;
     padding-bottom: 15px;
     margin-bottom: 15px;
     padding-left: 17px;
+    text-align: left;
 }
 
 .site-title {
@@ -216,10 +217,77 @@ img[alt="Mon Cœur Se Recommande à Rameau — score cover"], img[alt="Democracy
    font-size: 8px;
 }
 
+.bio-text p {
+    font-family: var(--font-paracopy);
+    margin-bottom: 35px;
+    font-size: 16px;
+    line-height: 30px;
+    color: #fff;
+}
+
+.bio-text b {
+  font-weight: 900;
+}
+
+p.which-brings {
+  text-align: center;
+}
+
+.score-image {
+  /* margin: 30px; */
+  box-shadow: 0px 0px 6px #00000040;
+  transition: 0.4s ease-in-out;
+  display: block;
+  margin: 0 auto;
+}
+
+.score-image:hover {
+  transform: scale(1.02);
+}
+
+.middle-score {
+  margin-top: 25px;
+}
+
+.long-score {
+  display: block;
+   margin: 0 auto 40px auto;
+}
+
+.rotate-score:hover {
+  transform: rotate(-90deg) scale(1.7);
+
+}
+
+p.first-big {
+  font-size: 32px;
+  margin: 32px 0;
+  line-height: 40px;
+}
+
+p.now-text {
+  font-weight: bold;
+  font-size: 62px;
+  margin: 62px 0;
+  display: none;
+}
+
+img[alt="Image of Nick"] {
+  border-radius: 4px;
+}
+
+.pic-of-me {
+  box-shadow: 0px 0px 3px black;
+}
+
 @media (max-width: 48rem) {
      .search-box {
   position: relative;
   top: 0px;
+}
+
+.middle-score {
+    margin-top: 0px
 }
 
 }
@@ -234,5 +302,7 @@ img[alt="Mon Cœur Se Recommande à Rameau — score cover"], img[alt="Democracy
       left: 20px;
       font-size: 1rem;
     }
+
+
 
 }

@@ -139,10 +139,10 @@ export default function WorkCard({ work }: { work: Work }) {
         </div>
       ) : null}
 
-      {/* <div className="mt-4 flex flex-wrap gap-3">
+      <div className="mt-4 flex flex-wrap gap-3">
         <LinkRow label="Audio" href={work.audio_url} />
-        <LinkRow label="Video" href={work.video_url} />
-      </div> */}
+        {/* <LinkRow label="Video" href={work.video_url} /> */}
+      </div> 
 
       {work.tags?.length ? (
         <div className="mt-4 flex flex-wrap gap-2">

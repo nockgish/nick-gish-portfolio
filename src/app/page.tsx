@@ -1,3 +1,6 @@
+
+import TransitionLink from "@/components/TransitionLink";
+
 export default function HomePage() {
   return (
     <div className="grid gap-8">
@@ -7,12 +10,12 @@ export default function HomePage() {
           Composer. Music that favors weight, grain, and clarity—where complexity serves momentum.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <a className="rounded-xl bg-black px-4 py-2 text-sm font-medium text-white" href="/works">
+          <TransitionLink className="rounded-xl bg-black px-4 py-2 text-sm font-medium text-white" href="/works">
             View catalog
-          </a>
-          <a className="rounded-xl border px-4 py-2 text-sm font-medium" href="/bio">
+          </TransitionLink>
+          <TransitionLink className="rounded-xl border px-4 py-2 text-sm font-medium" href="/bio">
             Read biography
-          </a>
+          </TransitionLink>
         </div>
       </section>
 

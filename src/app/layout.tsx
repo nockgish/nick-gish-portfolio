@@ -5,6 +5,7 @@ import { Oswald } from "next/font/google";
 import { Red_Hat_Display } from "next/font/google";
 import { Special_Gothic } from "next/font/google";
 import BodyBackground from "@/components/BodyBackground";
+import { RouteFade, RouteTransitionProvider } from "@/components/RouteTransition";
 
 
 const headingFont = Red_Hat_Display({
@@ -37,8 +38,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
      <body className={`${headingFont.variable} ${bodyFont.variable} ${oswaldFont.variable} min-h-screen bg-zinc-50`}>
         <BodyBackground />
+        <RouteTransitionProvider>
         <Nav />
-        <main className="mx-auto w-full max-w-5xl px-4 py-6 sm:py-10">{children}</main>
+        <main className="mx-auto w-full max-w-5xl px-4 py-6 sm:py-10"><RouteFade>{children}</RouteFade>
+        </main>
+        
 <footer className="border-t bg-white">
   <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-8 text-sm text-black/60">
     <span>© {new Date().getFullYear()} Nick Gish</span>
@@ -48,10 +52,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className="admin_link hover:text-black"
     >
       {/* &#8874; */}
-      &#9635;
+      &#9715;
     </a>
   </div>
 </footer>
+</RouteTransitionProvider>
       </body>
     </html>
   );
