@@ -137,7 +137,7 @@ export default function Nav() {
         <button
           ref={buttonRef}
           type="button"
-          className="sm:hidden inline-flex items-center justify-center rounded-xl border bg-white px-3 py-2 text-sm"
+          className="sm:hidden inline-flex items-center justify-center rounded-xl px-3 py-2 text-sm"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -145,15 +145,15 @@ export default function Nav() {
           <span className="sr-only">Menu</span>
           <div className="grid gap-1">
             <span
-              className={`block h-0.5 w-5 bg-black transition ${
+              className={`block h-0.5 w-5 bg-white transition ${
                 open ? "translate-y-1.5 rotate-45" : ""
               }`}
             />
             <span
-              className={`block h-0.5 w-5 bg-black transition ${open ? "opacity-0" : ""}`}
+              className={`block h-0.5 w-5 bg-white transition ${open ? "opacity-0" : ""}`}
             />
             <span
-              className={`block h-0.5 w-5 bg-black transition ${
+              className={`block h-0.5 w-5 bg-white transition ${
                 open ? "-translate-y-1.5 -rotate-45" : ""
               }`}
             />
