@@ -86,7 +86,7 @@ export default function AdminPage() {
   async function saveWork(draft: WorkDraft) {
     if (!canEdit) throw new Error("Not authorized.");
 
-    const payload = {
+  const payload = {
   title: draft.title,
   year: draft.year,
   instrumentation: draft.instrumentation || null,
@@ -200,7 +200,21 @@ export default function AdminPage() {
         <div className="flex gap-2">
           <button
             className="rounded-xl bg-black px-4 py-2 text-sm font-medium text-white"
-            onClick={() => setForm({ title: "", year: null, instrumentation: "", duration: "", description: "", premiere: "", pdf_url: "", audio_url: "", video_url: "", tags: [], sort_order: 0, is_published: true })}
+            onClick={() => setForm({  
+                                    title: "",
+                                    year: null,
+                                    instrumentation: "",
+                                    duration: "",
+                                    description: "",
+                                    premiere: "",
+                                    pdf_url: "",
+                                    audio_url: "",
+                                    video_url: "",
+                                    score_cover_url: "",
+                                    category: "solo",
+                                    tags: [],
+                                    sort_order: 0,
+                                    is_published: true, })}
           >
             New work
           </button>
