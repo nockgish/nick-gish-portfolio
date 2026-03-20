@@ -16,7 +16,7 @@ function Section({
   return (
     <section className="grid gap-4">
       <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
-      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4">
         {items.map((w) => (
           <WorkCard key={w.id} work={w} />
         ))}
@@ -27,7 +27,7 @@ function Section({
 
 function SkeletonGrid({ count = 6 }: { count?: number }) {
   return (
-    <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4">
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
