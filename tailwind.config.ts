@@ -29,8 +29,8 @@ const config: Config = {
   ],
   theme: {
     screens: {
-      sm: "48.75rem",   // ← your custom breakpoint (780px)
-      md: "48.75rem",
+      sm: "51.4375rem",   // ← your custom breakpoint (823px)
+      md: "51.4375rem",  // matches sm
       lg: "80rem",
       xl: "96rem",
     },

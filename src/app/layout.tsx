@@ -40,11 +40,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <BodyBackground />
         <RouteTransitionProvider>
         <Nav />
-        <main className="mx-auto w-full max-w-5xl px-4 py-6 sm:py-10"><RouteFade>{children}</RouteFade>
+        <main className="mx-auto w-full max-w-[80rem] px-4 py-6 sm:py-10"><RouteFade>{children}</RouteFade>
         </main>
         
 <footer className="border-t bg-white">
-  <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-8 text-sm text-black/60">
+  <div className="mx-auto flex max-w-[80rem] items-center justify-between px-4 py-8 text-sm text-black/60">
     <span>© {new Date().getFullYear()} Nick Gish</span>
 
     <a

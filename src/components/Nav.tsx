@@ -110,7 +110,7 @@ export default function Nav() {
 
   return (
     <header className="header-ribbon border-b bg-white/20 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
+      <div className="mx-auto flex max-w-[80rem] items-center justify-between px-4 py-4">
         {/* Brand (use RouteTransition for fade-out, but keep Link for prefetch) */}
         <Link
           href="/"
@@ -168,7 +168,7 @@ export default function Nav() {
         }`}
         aria-hidden={!open}
       >
-        <nav ref={panelRef} className="mx-auto max-w-5xl px-4 py-3">
+        <nav ref={panelRef} className="mx-auto max-w-[80rem] px-4 py-3">
           <div className="grid gap-1">
             {nav.map((item) => {
               const active = pathname === item.href;

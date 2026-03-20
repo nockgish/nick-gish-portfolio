@@ -19,7 +19,7 @@ function pickBackground(pathname: string): BgConfig {
     return { image: "/images/greens.jpg" };
   }
   // home
-  return { image: "/images/clouds3.jpg"}; 
+  return { image: "/images/back1.jpg"}; 
 }
 
 export default function BodyBackground({
