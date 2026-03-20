@@ -2,6 +2,7 @@
 @theme {
   --breakpoint-sm: 51.4375rem;
   --breakpoint-md: 51.4375rem;
+  --breakpoint-lg: 133.75rem;
 }
 
 :root {
