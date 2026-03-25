@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="mx-auto w-full max-w-[70rem] lg:max-w-[133.75rem] px-4 py-6 sm:py-10 transition-[max-width] duration-700 ease-in-out"><RouteFade>{children}</RouteFade>
         </main>
         
-<footer className="border-t bg-white">
+<footer className="border-t">
   <div className="mx-auto flex max-w-[70rem] lg:max-w-[133.75rem] items-center justify-between px-4 py-8 text-sm text-black/60">
     <span>© {new Date().getFullYear()} Nick Gish</span>
 
