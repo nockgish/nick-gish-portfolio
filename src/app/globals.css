@@ -24,10 +24,25 @@
   }
 }
 
+html {
+  background-color: #1a2e25;
+  min-height: 100%;
+  overscroll-behavior: none;
+}
+
 body {
+  background-color: transparent;
   background-size: cover;
+  overscroll-behavior: none;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 h1, h2, h3 {

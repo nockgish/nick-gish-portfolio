@@ -31,16 +31,17 @@ const bodyFont = Special_Gothic({
 export const metadata = {
   title: "Nick Gish — Composer",
   description: "Portfolio and catalog of works for composer Nick Gish",
+  themeColor: "#1a2e25",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-     <body className={`${headingFont.variable} ${bodyFont.variable} ${oswaldFont.variable} min-h-screen bg-zinc-50`}>
+     <body className={`${headingFont.variable} ${bodyFont.variable} ${oswaldFont.variable} min-h-svh flex flex-col`}>
         <BodyBackground />
         <RouteTransitionProvider>
         <Nav />
-        <main className="mx-auto w-full max-w-[70rem] lg:max-w-[133.75rem] px-4 py-6 sm:py-10 transition-[max-width] duration-700 ease-in-out"><RouteFade>{children}</RouteFade>
+        <main className="mx-auto w-full max-w-[70rem] lg:max-w-[133.75rem] px-4 py-6 sm:py-10 transition-[max-width] duration-700 ease-in-out flex-1"><RouteFade>{children}</RouteFade>
         </main>
         
 <footer className="border-t">

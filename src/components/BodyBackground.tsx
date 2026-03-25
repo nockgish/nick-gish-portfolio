@@ -70,7 +70,7 @@ export default function BodyBackground({
   const transition = `opacity ${durationMs}ms ease`;
 
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10">
+    <div className="pointer-events-none fixed inset-x-0 top-0 -z-10" style={{ bottom: '-100px' }}>
       {/* Layer A */}
       <div
         className="absolute inset-0 bg-cover bg-center"
