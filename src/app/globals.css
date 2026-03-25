@@ -28,6 +28,11 @@ html {
   background-color: #1a2e25;
   min-height: 100%;
   overscroll-behavior: none;
+  cursor: none;
+}
+
+* {
+  cursor: none !important;
 }
 
 body {

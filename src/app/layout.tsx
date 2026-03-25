@@ -5,6 +5,7 @@ import { Oswald } from "next/font/google";
 import { Red_Hat_Display } from "next/font/google";
 import { Special_Gothic } from "next/font/google";
 import BodyBackground from "@/components/BodyBackground";
+import CustomCursor from "@/components/CustomCursor";
 import { RouteFade, RouteTransitionProvider } from "@/components/RouteTransition";
 
 
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
      <body className={`${headingFont.variable} ${bodyFont.variable} ${oswaldFont.variable} min-h-svh flex flex-col`}>
         <BodyBackground />
+        <CustomCursor />
         <RouteTransitionProvider>
         <Nav />
         <main className="mx-auto w-full max-w-[70rem] lg:max-w-[133.75rem] px-4 py-6 sm:py-10 transition-[max-width] duration-700 ease-in-out flex-1"><RouteFade>{children}</RouteFade>

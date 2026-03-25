@@ -17,8 +17,8 @@ function Section({
     <section className="grid gap-4">
       <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
       <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4">
-        {items.map((w) => (
-          <WorkCard key={w.id} work={w} />
+        {items.map((w, i) => (
+          <WorkCard key={w.id} work={w} index={i} />
         ))}
       </div>
     </section>

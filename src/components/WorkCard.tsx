@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 export type Work = {
@@ -100,11 +100,28 @@ function ScoreCover({ work }: { work: Work }) {
   );
 }
 
-export default function WorkCard({ work }: { work: Work }) {
+export default function WorkCard({ work, index = 0 }: { work: Work; index?: number }) {
   const embedUrl = work.video_url ? getEmbedUrl(work.video_url) : null;
+  const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { setVisible(entry.isIntersecting); },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <article className="single-card rounded-2xl border bg-white p-4 sm:p-5 shadow-sm">
+    <article
+      ref={ref}
+      className="single-card rounded-2xl border bg-white p-4 sm:p-5 shadow-sm transition-[opacity,transform] duration-900 ease-out"
+      style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)', transitionDelay: `${(index % 3) * 100}ms` }}
+    >
       <div className="flex flex-col gap-1">
         <h3 className="text-lg font-semibold leading-tight">{work.title}</h3>
         <div className="text-sm text-black/70">
