@@ -39,12 +39,12 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="pointer-events-none fixed left-0 top-0 z-[9999]"
+      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden [@media(pointer:fine)]:block"
       style={{ willChange: "transform" }}
     >
       <svg
-        width="48"
-        height="48"
+        width="72"
+        height="72"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

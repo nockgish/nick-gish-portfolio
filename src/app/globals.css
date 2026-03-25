@@ -31,8 +31,14 @@ html {
   cursor: none;
 }
 
-* {
-  cursor: none !important;
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+
+  select:focus {
+    cursor: default !important;
+  }
 }
 
 body {
