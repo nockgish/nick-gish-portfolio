@@ -39,7 +39,7 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="pointer-events-none fixed left-0 top-0 z-[9999] hidden [@media(pointer:fine)]:block"
+      className="custom-cursor pointer-events-none fixed left-0 top-0 z-[9999]"
       style={{ willChange: "transform" }}
     >
       <svg
@@ -47,39 +47,28 @@ export default function CustomCursor() {
         height="72"
         viewBox="0 0 24 24"
         fill="none"
+        overflow="visible"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
           <filter id="cursor-shadow" x="-20%" y="-20%" width="140%" height="140%">
             <feDropShadow dx="1" dy="1" stdDeviation="1.5" floodColor="#000000" floodOpacity="0.5" />
           </filter>
+          <linearGradient id="cursor-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#f0853a" />
+            <stop offset="100%" stopColor="#a63d10" />
+          </linearGradient>
         </defs>
 
         {/* Triangle */}
         <path
           d="M4.1,3.0 Q3,2 3,3.5 L3,18.5 Q3,20 4.4,19.4 L15.6,14.6 Q17,14 15.9,13.0 L4.1,3.0 Z"
-          fill="#d97040"
+          fill="url(#cursor-gradient)"
           filter="url(#cursor-shadow)"
           style={{
-            opacity: hovering ? 0 : 1,
-            transform: hovering ? "scale(0.5)" : "scale(1)",
+            transform: hovering ? "rotate(45deg)" : "rotate(0deg)",
             transformOrigin: "10px 11px",
-            transition: "opacity 150ms ease, transform 150ms ease",
-          }}
-        />
-
-        {/* Plus */}
-        <path
-          d="M10 3 L10 17 M3 10 L17 10"
-          stroke="#d97040"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          filter="url(#cursor-shadow)"
-          style={{
-            opacity: hovering ? 1 : 0,
-            transform: hovering ? "scale(1)" : "scale(0.5)",
-            transformOrigin: "10px 10px",
-            transition: "opacity 150ms ease, transform 150ms ease",
+            transition: "transform 150ms ease",
           }}
         />
       </svg>

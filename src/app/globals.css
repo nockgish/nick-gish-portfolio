@@ -31,7 +31,15 @@ html {
   cursor: none;
 }
 
+.custom-cursor {
+  display: none;
+}
+
 @media (pointer: fine) {
+  .custom-cursor {
+    display: block;
+  }
+
   * {
     cursor: none !important;
   }
