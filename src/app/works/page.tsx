@@ -49,6 +49,7 @@ export default function WorksPage() {
 
   const [q, setQ] = useState("");
   const [tag, setTag] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<"default" | "az" | "za" | "newest" | "oldest">("default");
 
   useEffect(() => {
     let alive = true;
@@ -104,15 +105,24 @@ export default function WorksPage() {
     });
   }, [works, q, tag]);
 
+  const sorted = useMemo(() => {
+    const arr = [...filtered];
+    if (sortBy === "az") arr.sort((a, b) => a.title.localeCompare(b.title));
+    else if (sortBy === "za") arr.sort((a, b) => b.title.localeCompare(a.title));
+    else if (sortBy === "newest") arr.sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+    else if (sortBy === "oldest") arr.sort((a, b) => (a.year ?? 0) - (b.year ?? 0));
+    return arr;
+  }, [filtered, sortBy]);
+
   // Group in your requested order
   const grouped = useMemo(() => {
     return {
-      solo: filtered.filter((w) => w.category === "solo"),
-      chamber: filtered.filter((w) => w.category === "chamber"),
-      large_ensemble: filtered.filter((w) => w.category === "large_ensemble"),
-      chorus: filtered.filter((w) => w.category === "chorus"),
+      solo: sorted.filter((w) => w.category === "solo"),
+      chamber: sorted.filter((w) => w.category === "chamber"),
+      large_ensemble: sorted.filter((w) => w.category === "large_ensemble"),
+      chorus: sorted.filter((w) => w.category === "chorus"),
     };
-  }, [filtered]);
+  }, [sorted]);
 
   return (
     <div className="grid gap-6">
@@ -145,6 +155,18 @@ export default function WorksPage() {
                 {t}
               </option>
             ))}
+          </select>
+
+          <select
+            className="tag-select rounded-xl border px-3 py-2 text-sm"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+          >
+            <option value="default">Default order</option>
+            <option value="az">A → Z</option>
+            <option value="za">Z → A</option>
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
           </select>
         </div>
       </header>
