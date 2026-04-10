@@ -16,7 +16,7 @@ export default function BioPage() {
           <div className="grid md:grid-cols-2 gap-10 items-start mb-8 mt-10">
           <div className="relative overflow-hidden pic-of-me aspect-[3/4]">
           <Image
-          src="/images/nick.jpg"
+          src="/images/ng.jpg"
           alt="Image of Nick"
           fill
           className="object-cover object-top"
