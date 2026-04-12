@@ -8,6 +8,7 @@
 :root {
   --background: #215e50;
   --foreground: #171717;
+  --nav-height: 70px;
 }
 
 @theme inline {
@@ -146,8 +147,21 @@ color: #eee;
 }
 
 .search-box {
-  position: relative;
-  top: -34px;
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 100;
+  background-color: rgba(220, 220, 220, 0.315);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.23);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.38);
+  padding: 0.6rem 0.75rem;
+  margin: 0 -1rem;
+  border-radius: 4px;
+}
+
+.search-box.is-stuck {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .single-card {
@@ -317,10 +331,6 @@ img[alt="Image of Nick"] {
 }
 
 @media (max-width: 51.375rem) {
-     .search-box {
-  position: relative;
-  top: 0px;
-}
 
 .middle-score {
     margin-top: 0px

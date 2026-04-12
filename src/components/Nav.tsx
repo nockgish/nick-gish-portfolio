@@ -18,6 +18,18 @@ export default function Nav() {
 
   const panelRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
+
+  // Keep --nav-height in sync with the actual rendered height
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty("--nav-height", `${el.offsetHeight}px`);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Close the mobile menu when navigating
   useEffect(() => {
@@ -109,7 +121,7 @@ export default function Nav() {
   };
 
   return (
-    <header className="header-ribbon border-b bg-white/20 backdrop-blur">
+    <header ref={headerRef} className="header-ribbon border-b bg-white/20 backdrop-blur">
       <div className="mx-auto flex max-w-[70rem] lg:max-w-[133.75rem] items-center justify-between px-4 py-4 transition-[max-width] duration-700 ease-in-out">
         {/* Brand (use RouteTransition for fade-out, but keep Link for prefetch) */}
         <Link

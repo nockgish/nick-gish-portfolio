@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import WorkCard, { Work } from "@/components/WorkCard";
 
@@ -50,6 +50,19 @@ export default function WorksPage() {
   const [q, setQ] = useState("");
   const [tag, setTag] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"default" | "az" | "za" | "newest" | "oldest">("default");
+  const [stuck, setStuck] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setStuck(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -126,50 +139,49 @@ export default function WorksPage() {
 
   return (
     <div className="grid gap-6">
-      <header className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h1 className="text-5xl font-semibold tracking-loose">
-            Works
-          </h1>
-          {/* <p className="mt-1 text-sm text-black/70">
-            Browse scores, recordings, and instrumentation.
-          </p> */}
-        </div>
-
-        <div className="search-box flex flex-col gap-2 md:flex-row md:items-center">
-          <input
-            className="w-full rounded-xl border bg-white px-3 py-2 text-sm md:w-72"
-            placeholder="Search works…"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          />
-
-          <select
-            className="tag-select rounded-xl border px-3 py-2 text-sm"
-            value={tag ?? ""}
-            onChange={(e) => setTag(e.target.value || null)}
-          >
-            <option value="">All tags</option>
-            {tags.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="tag-select rounded-xl border px-3 py-2 text-sm"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-          >
-            <option value="default">Default order</option>
-            <option value="az">A → Z</option>
-            <option value="za">Z → A</option>
-            <option value="newest">Newest first</option>
-            <option value="oldest">Oldest first</option>
-          </select>
-        </div>
+      <header>
+        <h1 className="text-5xl font-semibold tracking-loose">
+          Works
+        </h1>
+        {/* <p className="mt-1 text-sm text-black/70">
+          Browse scores, recordings, and instrumentation.
+        </p> */}
       </header>
+
+      <div ref={sentinelRef} aria-hidden="true" />
+      <div className={`search-box flex flex-col gap-2 md:flex-row md:items-center${stuck ? " is-stuck" : ""}`}>
+        <input
+          className="w-full rounded-xl border bg-white px-3 py-2 text-sm md:w-72"
+          placeholder="Search works…"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
+
+        <select
+          className="tag-select rounded-xl border px-3 py-2 text-sm"
+          value={tag ?? ""}
+          onChange={(e) => setTag(e.target.value || null)}
+        >
+          <option value="">All tags</option>
+          {tags.map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
+        </select>
+
+        <select
+          className="tag-select rounded-xl border px-3 py-2 text-sm"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+        >
+          <option value="default">Default order</option>
+          <option value="az">A → Z</option>
+          <option value="za">Z → A</option>
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+        </select>
+      </div>
 
       {/* Loading state: show skeletons immediately */}
       {loading ? <SkeletonGrid count={6} /> : null}
