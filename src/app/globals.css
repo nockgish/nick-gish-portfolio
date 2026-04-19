@@ -98,6 +98,18 @@ h3 {
   font-size: 1.5rem;
 }
 
+.featured-header {
+  border-bottom: 1px solid #ffffff57;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.featured-header h2 {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
 div h2 {
 color: #eee;
     text-shadow: 0 0 2px #0000008a;
@@ -351,4 +363,14 @@ img[alt="Image of Nick"] {
 
 
 
+}
+
+
+
+.view_signal {
+font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
 }

@@ -1,5 +1,6 @@
 
 import TransitionLink from "@/components/TransitionLink";
+import FeaturedWorks from "@/components/FeaturedWorks";
 
 export default function HomePage() {
   return (
@@ -7,7 +8,6 @@ export default function HomePage() {
       <section className="rounded-3xl border bg-white p-8 shadow-sm">
         <h1 className="text-3xl font-semibold tracking-tight">Nick Gish</h1>
         <p className="mt-3 max-w-2xl text-base text-black/75">
-          Composer. Music that favors weight, grain, and clarity—where complexity serves momentum.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <TransitionLink className="rounded-xl bg-black px-4 py-2 text-sm font-medium text-white" href="/works">
@@ -35,6 +35,10 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      <FeaturedWorks />
     </div>
   );
 }
+
+/* feature pieces on the homepage */
