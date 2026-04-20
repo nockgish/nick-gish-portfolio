@@ -70,6 +70,10 @@ h1, h2, h3 {
   color: #ffffff;
 }
 
+textarea[placeholder="Message"] {
+  color: #000;
+}
+
 
 h1 {
   font-size: 8rem;
@@ -96,6 +100,20 @@ font-size: 1.5vw;
 h3 {
   color: black;
   font-size: 1.5rem;
+}
+
+.glass-panel h2 {
+  border-bottom: none;
+  padding-bottom: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.glass-panel {
+  background-color: rgba(220, 220, 220, 0.315);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 12px #00000061;
+  border: 1px solid #ffffff3b;
 }
 
 .featured-header {
@@ -373,4 +391,5 @@ font-family: var(--font-heading);
     font-weight: 800;
     letter-spacing: 2px;
     font-size: 0.75rem;
+    color: #fff;
 }

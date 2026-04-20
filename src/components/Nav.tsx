@@ -7,8 +7,8 @@ import { useRouteTransition } from "@/components/RouteTransition";
 
 const nav = [
   { href: "/", label: "Home" },
-  { href: "/bio", label: "Bio" },
   { href: "/works", label: "Works" },
+  { href: "/bio", label: "Bio" },
 ];
 
 export default function Nav() {
