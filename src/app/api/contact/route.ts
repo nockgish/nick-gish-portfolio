@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
-  const { email, subject, message } = await req.json();
+  const { firstName, lastName, email, subject, role, message } = await req.json();
 
-  if (!email?.trim() || !subject?.trim() || !message?.trim()) {
+  if (!firstName?.trim() || !lastName?.trim() || !email?.trim() || !subject?.trim() || !message?.trim()) {
     return NextResponse.json({ error: "All fields are required." }, { status: 400 });
   }
 
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     from: process.env.GMAIL_USER,
     to: process.env.GMAIL_USER,
     subject: `Portfolio contact: ${subject}`,
-    text: `From: ${email}\n\n${message}`,
+    text: `From: ${firstName} ${lastName} <${email}>\nRole: ${role}\n\n${message}`,
     replyTo: email,
   });
 

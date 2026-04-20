@@ -5,16 +5,18 @@ import { supabase } from "@/lib/supabaseClient";
 import WorkCard, { Work } from "@/components/WorkCard";
 
 function Section({
+  id,
   title,
   items,
 }: {
+  id: string;
   title: string;
   items: Work[];
 }) {
   if (!items.length) return null;
 
   return (
-    <section className="grid gap-4">
+    <section id={id} className="grid gap-4 works-section">
       <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
       <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4">
         {items.map((w, i) => (
@@ -181,6 +183,22 @@ export default function WorksPage() {
           <option value="newest">Newest first</option>
           <option value="oldest">Oldest first</option>
         </select>
+
+        <div className="flex items-center md:ml-auto">
+          {[
+            { href: "#solo", label: "Solo" },
+            { href: "#chamber", label: "Chamber" },
+            { href: "#large-ensemble", label: "Large Ensemble" },
+            { href: "#choral", label: "Choral" },
+          ].map(({ href, label }, i, arr) => (
+            <span key={href} className="flex items-center">
+              <a href={href} className="works-anchor text-sm px-3">
+                {label}
+              </a>
+              {i < arr.length - 1 && <span className="text-white/30">|</span>}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Loading state: show skeletons immediately */}
@@ -196,10 +214,10 @@ export default function WorksPage() {
           <p className="text-sm text-black/70">No works found.</p>
         ) : (
           <div className="grid gap-10">
-            <Section title="Solo" items={grouped.solo} />
-            <Section title="Chamber" items={grouped.chamber} />
-            <Section title="Large Ensemble" items={grouped.large_ensemble} />
-            <Section title="Choral" items={grouped.chorus} />
+            <Section id="solo" title="Solo" items={grouped.solo} />
+            <Section id="chamber" title="Chamber" items={grouped.chamber} />
+            <Section id="large-ensemble" title="Large Ensemble" items={grouped.large_ensemble} />
+            <Section id="choral" title="Choral" items={grouped.chorus} />
             
           </div>
         )}

@@ -176,6 +176,26 @@ color: #eee;
   color: #00e03f00;
 }
 
+.works-section {
+  scroll-margin-top: calc(var(--nav-height) + 70px);
+}
+
+.works-anchor {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-size: 0.7rem;
+  color: #fff;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.works-anchor:hover {
+  opacity: 1;
+}
+
 .search-box {
   position: sticky;
   top: var(--nav-height);
@@ -424,4 +444,16 @@ font-family: var(--font-heading);
     letter-spacing: 2px;
     font-size: 0.75rem;
     color: #fff;
+}
+
+.thank_you_text {
+color: #fff;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    width: 43rem;
+}
+
+.contact_intro {
+  color: #fff;
+  font-size: 1.5rem;
 }

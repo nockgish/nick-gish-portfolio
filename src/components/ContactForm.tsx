@@ -5,8 +5,11 @@ import { useState } from "react";
 type Status = "idle" | "sending" | "sent" | "error";
 
 export default function ContactForm() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
+  const [role, setRole] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<Status>("idle");
 
@@ -18,7 +21,7 @@ export default function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, subject, message }),
+        body: JSON.stringify({ firstName, lastName, email, subject, role, message }),
       });
 
       if (!res.ok) throw new Error();
@@ -30,7 +33,7 @@ export default function ContactForm() {
 
   if (status === "sent") {
     return (
-      <p className="mt-2 text-sm text-black/70">
+      <p className="thank_you_text mt-20 text-sm text-black/70">
         Thank you for reaching out! I'll reply to you as soon as I can.
       </p>
     );
@@ -38,6 +41,22 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-2 grid gap-3">
+      <div className="grid grid-cols-2 gap-3">
+        <input
+          className="rounded-xl border bg-white/60 px-3 py-2 text-sm placeholder:text-black/40"
+          placeholder="First name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
+        <input
+          className="rounded-xl border bg-white/60 px-3 py-2 text-sm placeholder:text-black/40"
+          placeholder="Last name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+        />
+      </div>
       <input
         type="email"
         className="rounded-xl border bg-white/60 px-3 py-2 text-sm placeholder:text-black/40"
@@ -53,6 +72,19 @@ export default function ContactForm() {
         onChange={(e) => setSubject(e.target.value)}
         required
       />
+      <select
+        className="rounded-xl border bg-white/60 px-3 py-2 text-sm"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        required
+      >
+        <option value="" disabled>What best describes your role in music?</option>
+        <option value="Instrumentalist">Instrumentalist</option>
+        <option value="Singer">Singer</option>
+        <option value="Composer">Composer</option>
+        <option value="Conductor">Conductor</option>
+        <option value="Arts Administrator">Arts Administrator</option>
+      </select>
       <textarea
         className="rounded-xl border bg-white/60 px-3 py-2 text-sm placeholder:text-black/40 resize-none"
         placeholder="Message"
