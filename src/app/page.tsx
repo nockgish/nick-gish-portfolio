@@ -33,9 +33,7 @@ export default function HomePage() {
         </FadeIn>
       </section>
 
-      <FadeIn delay={300}>
-        <FeaturedWorks />
-      </FadeIn>
+      <FeaturedWorks />
     </div>
   );
 }
