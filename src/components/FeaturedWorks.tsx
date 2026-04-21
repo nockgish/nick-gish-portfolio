@@ -42,7 +42,7 @@ export default async function FeaturedWorks() {
       </div>
       <div className="grid gap-6 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4">
         {works.map((w, i) => (
-          <WorkCard key={w.id} work={w} index={i} />
+          <WorkCard key={w.id} work={w} index={i} eager />
         ))}
       </div>
     </section>

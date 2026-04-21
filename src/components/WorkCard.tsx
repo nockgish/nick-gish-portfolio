@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
 
@@ -101,15 +101,24 @@ function ScoreCover({ work }: { work: Work }) {
   );
 }
 
-export default function WorkCard({ work, index = 0 }: { work: Work; index?: number }) {
+export default function WorkCard({ work, index = 0, eager = false }: { work: Work; index?: number; eager?: boolean }) {
   const embedUrl = work.video_url ? getEmbedUrl(work.video_url) : null;
   const { ref, visible } = useInView<HTMLElement>();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    if (!eager) return;
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(raf);
+  }, [eager]);
+
+  const show = eager ? mounted : visible;
 
   return (
     <article
       ref={ref}
       className="single-card rounded-2xl border bg-white p-4 sm:p-5 shadow-sm transition-[opacity,transform] duration-900 ease-out"
-      style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)', transitionDelay: `${(index % 3) * 100}ms` }}
+      style={{ opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(20px)', transitionDelay: `${index * 100}ms` }}
     >
       <div className="flex flex-col gap-1">
         <h3 className="text-lg font-semibold leading-tight">{work.title}</h3>
