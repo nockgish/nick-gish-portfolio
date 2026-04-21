@@ -184,7 +184,7 @@ export default function WorksPage() {
           <option value="oldest">Oldest first</option>
         </select>
 
-        <div className="flex items-center md:ml-auto">
+        <div className="flex flex-wrap items-center md:ml-auto">
           {[
             { href: "#solo", label: "Solo" },
             { href: "#chamber", label: "Chamber" },
