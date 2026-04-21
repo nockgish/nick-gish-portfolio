@@ -29,25 +29,6 @@ html {
   background-color: #1a2e25;
   min-height: 100%;
   overscroll-behavior: none;
-  cursor: none;
-}
-
-.custom-cursor {
-  display: none;
-}
-
-@media (pointer: fine) {
-  .custom-cursor {
-    display: block;
-  }
-
-  * {
-    cursor: none !important;
-  }
-
-  select:focus {
-    cursor: default !important;
-  }
 }
 
 body {
