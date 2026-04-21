@@ -12,12 +12,7 @@ function getObserver() {
     sharedObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            callbacks.get(entry.target)?.(true);
-            // One-shot: stop watching once it has become visible.
-            sharedObserver?.unobserve(entry.target);
-            callbacks.delete(entry.target);
-          }
+          callbacks.get(entry.target)?.(entry.isIntersecting);
         }
       },
       { threshold: 0.1 }
