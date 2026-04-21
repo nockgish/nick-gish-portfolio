@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -156,11 +158,7 @@ export default function ContactForm() {
         className="contact-btn self-start rounded-xl bg-black px-5 py-4 text-sm font-medium text-white disabled:opacity-50 flex items-center justify-center gap-2"
       >
         {status === "sending" ? "Sending…" : "Send"}
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="contact-btn-arrow w-5 h-5">
-          <path d="M2 9 L14 9 L14 6 L22 12 L14 18 L14 15 L2 15 Z" fill="currentColor"/>
-          <path d="M2 9 L4 7 L16 7 L14 9 Z" fill="currentColor" fillOpacity="0.5"/>
-          <path d="M14 6 L16 4 L22 12 L22 12 Z" fill="currentColor" fillOpacity="0.3"/>
-        </svg>
+        <FontAwesomeIcon icon={faArrowRight} className="contact-btn-arrow w-4 h-4" />
       </button>
     </form>
     </>

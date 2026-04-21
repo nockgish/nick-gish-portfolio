@@ -180,6 +180,12 @@ color: #eee;
   scroll-margin-top: calc(var(--nav-height) + 70px);
 }
 
+@media (max-width: 51.375rem) {
+  .works-section {
+    scroll-margin-top: calc(var(--nav-height) + 200px);
+  }
+}
+
 .works-anchor {
   font-family: var(--font-heading);
   text-transform: uppercase;
