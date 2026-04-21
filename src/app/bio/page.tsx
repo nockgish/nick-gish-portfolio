@@ -1,19 +1,19 @@
 import Image from "next/image";
-import PageFade from "@/components/PageFade";
 import FadeIn from "@/components/FadeIn";
 
 export default function BioPage() {
   return (
     
     <article className="bio-text prose max-w-[65rem] lg:max-w-none mx-auto lg:mx-0 h-auto min-h-0">
-      <PageFade className="prose max-w-none">
-      <h1>Bio</h1>
+      <div className="prose max-w-none">
+      <FadeIn><h1>Bio</h1></FadeIn>
 
       <div className="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start">
 
         {/* Left column */}
         <div>
           <div className="grid md:grid-cols-2 gap-10 items-start mb-8 mt-10">
+          <FadeIn>
           <div className="relative overflow-hidden pic-of-me aspect-[3/4]">
           <Image
           src="/images/ng.jpg"
@@ -23,6 +23,7 @@ export default function BioPage() {
           sizes="(min-width: 200px) 50vw, 100vw"
           />
           </div>
+          </FadeIn>
           <FadeIn delay={100} className="space-y-8">
              <p className="first-big">
              This journey begins <b>in media res</b>...
@@ -86,7 +87,7 @@ export default function BioPage() {
         </div>
 
       </div>
-      </PageFade>
+      </div>
     </article>
     
   );

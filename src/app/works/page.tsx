@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import WorkCard, { Work } from "@/components/WorkCard";
+import FadeIn from "@/components/FadeIn";
 
 function Section({
   id,
@@ -148,9 +149,9 @@ export default function WorksPage() {
   return (
     <div className="grid gap-6">
       <header>
-        <h1 className="text-5xl font-semibold tracking-loose">
-          Works
-        </h1>
+        <FadeIn>
+          <h1 className="text-5xl font-semibold tracking-loose">Works</h1>
+        </FadeIn>
         {/* <p className="mt-1 text-sm text-black/70">
           Browse scores, recordings, and instrumentation.
         </p> */}

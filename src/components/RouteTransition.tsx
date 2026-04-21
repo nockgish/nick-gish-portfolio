@@ -4,7 +4,6 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -39,39 +38,16 @@ export function RouteTransitionProvider({
   const pathname = usePathname();
 
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const pendingHref = useRef<string | null>(null);
-  const timerRef = useRef<number | null>(null);
-
-  function clearTimer() {
-    if (timerRef.current) {
-      window.clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
-  }
 
   const navigate = (href: string) => {
     if (!href || href === pathname) return;
-
-    // If a transition is already in-flight, just update the destination.
-    pendingHref.current = href;
     setIsTransitioning(true);
-
-    clearTimer();
-    timerRef.current = window.setTimeout(() => {
-      const dest = pendingHref.current;
-      pendingHref.current = null;
-      if (dest) router.push(dest);
-    }, durationMs);
+    router.push(href);
   };
 
-  // After the route changes, clear transitioning state.
   useEffect(() => {
-    clearTimer();
     setIsTransitioning(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
-
-  useEffect(() => () => clearTimer(), []);
 
   return (
     <RouteTransitionContext.Provider
@@ -90,9 +66,9 @@ export function RouteFade({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { isTransitioning, durationMs } = useRouteTransition();
 
-  const [opacity, setOpacity] = useState(1);
+  const [opacity, setOpacity] = useState(0);
 
-  // Fade out when Nav triggers a transition.
+  // Fade out immediately on click (cosmetic only — navigation already in flight).
   useEffect(() => {
     if (isTransitioning) setOpacity(0);
   }, [isTransitioning]);
