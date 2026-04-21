@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
+import { useInView } from "@/hooks/useInView";
 
 export type Work = {
   id: string;
@@ -102,19 +103,7 @@ function ScoreCover({ work }: { work: Work }) {
 
 export default function WorkCard({ work, index = 0 }: { work: Work; index?: number }) {
   const embedUrl = work.video_url ? getEmbedUrl(work.video_url) : null;
-  const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { setVisible(entry.isIntersecting); },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+  const { ref, visible } = useInView<HTMLElement>();
 
   return (
     <article

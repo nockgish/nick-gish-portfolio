@@ -13,18 +13,21 @@ const headingFont = Red_Hat_Display({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-heading",
+  display: "optional",
 });
 
 const oswaldFont = Oswald({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-oswald",
+  display: "optional",
 });
 
 const bodyFont = Special_Gothic({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-paracopy",
+  display: "optional",
 })
 
 

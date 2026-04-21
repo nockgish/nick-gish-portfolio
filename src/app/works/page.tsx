@@ -50,6 +50,12 @@ export default function WorksPage() {
   const [loading, setLoading] = useState(true);
 
   const [q, setQ] = useState("");
+  const [debouncedQ, setDebouncedQ] = useState("");
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQ(q), 200);
+    return () => clearTimeout(t);
+  }, [q]);
   const [tag, setTag] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"default" | "az" | "za" | "newest" | "oldest">("default");
   const [stuck, setStuck] = useState(false);
@@ -99,7 +105,7 @@ export default function WorksPage() {
   }, [works]);
 
   const filtered = useMemo(() => {
-    const query = q.trim().toLowerCase();
+    const query = debouncedQ.trim().toLowerCase();
 
     return works.filter((w) => {
       const hay = [
@@ -118,7 +124,7 @@ export default function WorksPage() {
 
       return matchesQuery && matchesTag;
     });
-  }, [works, q, tag]);
+  }, [works, debouncedQ, tag]);
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
