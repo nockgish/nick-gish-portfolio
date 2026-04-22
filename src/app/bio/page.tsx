@@ -29,7 +29,7 @@ export default function BioPage() {
              This journey begins <b>in media res</b>...
              </p>
              <p className="leading-relaxed">
-             It was 2017. I had a work called <b>Democracy</b> premiere at St. James Cathedral in Brooklyn, NY on baroque instruments by an ensemble of expert players. Hearing my work played, my ideas transformed into sound waves hitting me wave after wave ignited something new in me.
+             It was 2017. I had a work called <a className="dem_link" href="https://audius.co/nickgish/democracy-a-poem-by-langston-hughes"><b>Democracy</b></a> premiere at St. James Cathedral in Brooklyn, NY on baroque instruments by an ensemble of expert players. Hearing my work played, my ideas transformed into sound waves hitting me wave after wave ignited something new in me.
           </p>
 
           <p>Turning the pages back even further, I had worked as a web developer and designer for nearly a decade and a half. I had written countless lines of code. But, hearing this new work engendered something in me which I can't fully describe. I can say it lit a fire under my butt. I could say it sparked something in me I had been missing: The will to create.</p>

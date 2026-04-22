@@ -461,3 +461,7 @@ color: #fff;
   color: #fff;
   font-size: 1.5rem;
 }
+
+.dem_link {
+  border-bottom: 1px dotted #fff;
+}
