@@ -36,8 +36,9 @@ export default async function FeaturedWorks() {
     <section className="grid gap-4">
       <div className="featured-header flex items-baseline justify-between">
         <h2 className="text-xl font-semibold tracking-tight">Recent Works</h2>
-        <TransitionLink href="/works" className="view_signal">
-          View all →
+        <TransitionLink href="/works" className="view_signal group inline-flex items-center gap-1">
+          View all
+          <span className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-1">→</span>
         </TransitionLink>
       </div>
       <div className="grid gap-6 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4">

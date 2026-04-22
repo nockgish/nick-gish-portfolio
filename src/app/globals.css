@@ -465,3 +465,26 @@ color: #fff;
 .dem_link {
   border-bottom: 1px dotted #fff;
 }
+
+a.cv-btn[href$=".pdf"] {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+  color: #fff;
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+a.cv-btn[href$=".pdf"]:hover {
+  background-color: #00807c;
+  border-color: #00807c;
+  color: #fff;
+}

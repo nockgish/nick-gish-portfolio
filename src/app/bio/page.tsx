@@ -1,12 +1,22 @@
 import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
 export default function BioPage() {
   return (
     
     <article className="bio-text prose max-w-[65rem] lg:max-w-none mx-auto lg:mx-0 h-auto min-h-0">
       <div className="prose max-w-none">
-      <FadeIn><h1>Bio</h1></FadeIn>
+      <FadeIn>
+        <div className="flex items-center justify-between">
+          <h1>Bio</h1>
+          <a href="/pdfs/GishResume+Works2025.pdf" target="_blank" rel="noreferrer" className="cv-btn gap-2">
+            Download CV
+            <FontAwesomeIcon icon={faFilePdf} style={{ fontSize: "1rem" }} />
+          </a>
+        </div>
+      </FadeIn>
 
       <div className="lg:grid lg:grid-cols-2 lg:gap-16 lg:items-start">
 
@@ -48,7 +58,7 @@ export default function BioPage() {
 
           <p className="first-big now-text">Now...</p>
 
-          <FadeIn><p>I had spent the early 2000's trying to be a composer. I got a degree in music composition, wrote music, I got some performances. But ultimately, I feel like I had to be practical. So I choose a career in computers, writing code for other people's business and organizations. Along the way, I worked for a library system, a magazine conglomerate, small businesses, startups, and financial institutions. I learned a fair amount about a lot of topics that were alien to my interest which always lived under the hood. The engine of music within me, always kept going no matter what direction in which the car drove.</p></FadeIn>
+          <FadeIn><p>I had spent the early 2000's trying to be a composer. I got a degree in music composition, wrote music, I got some performances. But ultimately, I feel like I had to be practical. So I chose a career in computers, writing code for other people's business and organizations. Along the way, I worked for a library system, a magazine conglomerate, small businesses, startups, and financial institutions. I learned a fair amount about a lot of topics that were alien to my interest which always lived under the hood. The engine of music within me, always kept going no matter what direction in which the car drove.</p></FadeIn>
           <FadeIn delay={100}><p>I just had an operating system which said "hey you can't be a composer, you've got to do X or Y or Z instead." But, that fateful day in the spring of 2017 started something new brewing. In 2021, I moved from New York back to my native Louisiana, after 8 years in the city. I pressed reset on my life, booted up <b>a new OS</b> and started over.</p></FadeIn>
         </div>
 
