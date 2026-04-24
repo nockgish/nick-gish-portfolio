@@ -22,7 +22,7 @@ export default function BioPage() {
 
         {/* Left column */}
         <div>
-          <div className="grid md:grid-cols-2 gap-10 items-start mb-8 mt-10">
+          <div className="grid md:grid-cols-2 gap-16 items-center mb-8 mt-10">
           <FadeIn>
           <div className="relative overflow-hidden pic-of-me aspect-[3/4]">
           <Image

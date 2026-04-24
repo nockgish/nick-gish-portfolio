@@ -17,12 +17,6 @@ export default function HomePage() {
               <p className="mt-3 max-w-2xl lg:max-w-none text-3xl lg:text-5xl text-white" style={{ fontFamily: "var(--font-paracopy)" }}>
                 I am composer of many types of music, with a current focus on acoustic concert music.
               </p>
-              <p className="mt-4 max-w-2xl lg:max-w-none text-white lg:text-lg" style={{ fontFamily: "var(--font-paracopy)" }}>
-                I draw my inspiration from sources like various weather/natural phenomena to ancient Irish Mythology and Astrology to modern Astronomy. I have a deep and abiding
-                interest in depths of human creativity spanning back as far as our known history as a species.
-              </p>
-            </FadeIn>
-            <FadeIn delay={150}>
               <div className="mt-10 flex flex-wrap gap-3 justify-center sm:justify-start">
                 <TransitionLink className="rounded-xl bg-black px-4 py-3 text-sm lg:text-lg lg:px-6 lg:py-4 font-medium text-white inline-flex items-center gap-2" href="/works">
                   Browse Works
@@ -33,6 +27,12 @@ export default function HomePage() {
                   <FontAwesomeIcon icon={faBookOpen} style={{ fontSize: "1.25rem" }} />
                 </TransitionLink>
               </div>
+            </FadeIn>
+            <FadeIn delay={150}>
+              <p className="mt-8 max-w-2xl lg:max-w-none text-white lg:text-lg" style={{ fontFamily: "var(--font-paracopy)" }}>
+                I draw my inspiration from sources like various weather/natural phenomena to ancient Irish Mythology and Astrology to modern Astronomy. I have a deep and abiding
+                interest in depths of human creativity spanning back as far as our known history as a species.
+              </p>
             </FadeIn>
           </div>
           <FadeIn delay={200}>

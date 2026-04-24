@@ -129,6 +129,14 @@ export default function WorkCard({ work, index = 0, eager = false }: { work: Wor
         </div>
       </div>
 
+      {work.audio_url?.startsWith("mp3s/") && (
+        <div className="mt-3">
+          <audio controls className="w-full" preload="none">
+            <source src={work.audio_url} />
+          </audio>
+        </div>
+      )}
+
       <ScoreCover work={work} />
 
       {work.description ? (
@@ -154,10 +162,6 @@ export default function WorkCard({ work, index = 0, eager = false }: { work: Wor
         </div>
       ) : null}
 
-      <div className="mt-4 flex flex-wrap gap-3">
-        <LinkRow label="Audio" href={work.audio_url} />
-        {/* <LinkRow label="Video" href={work.video_url} /> */}
-      </div> 
 
       {work.tags?.length ? (
         <div className="mt-4 flex flex-wrap gap-2">
