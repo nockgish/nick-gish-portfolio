@@ -4,9 +4,9 @@ import WorkCard from "@/components/WorkCard";
 import TransitionLink from "@/components/TransitionLink";
 
 const CATEGORIES: { key: Work["category"]; label: string }[] = [
-  { key: "solo", label: "Solo" },
-  { key: "chamber", label: "Chamber" },
   { key: "large_ensemble", label: "Large Ensemble" },
+  { key: "chamber", label: "Chamber" },
+  { key: "solo", label: "Solo" },
   { key: "chorus", label: "Choral" },
 ];
 

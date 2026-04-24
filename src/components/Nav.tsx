@@ -15,11 +15,44 @@ const nav = [
   { href: "/contact", label: "Contact" },
 ];
 
+function NavLink({
+  href,
+  label,
+  pathname,
+  navigate,
+  isTransitioning,
+}: {
+  href: string;
+  label: string;
+  pathname: string;
+  navigate: (href: string) => void;
+  isTransitioning: boolean;
+}) {
+  const active = pathname === href;
+  return (
+    <a
+      href={href}
+      onClick={(e) => {
+        e.preventDefault();
+        navigate(href);
+      }}
+      className={`rounded-md px-2 py-1 transition hover:bg-black/5 ${
+        active ? "font-semibold" : "text-black/70"
+      } ${isTransitioning ? "pointer-events-none opacity-60" : ""}`}
+    >
+      {label}
+    </a>
+  );
+}
+
 export default function Nav() {
   const pathname = usePathname();
   const { navigate, isTransitioning } = useRouteTransition();
   const audio = useAudio();
   const [open, setOpen] = useState(false);
+  const [playerMounted, setPlayerMounted] = useState(false);
+  const [playerVisible, setPlayerVisible] = useState(false);
+  const lastTrackRef = useRef(audio.currentTrack);
 
   const panelRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -35,6 +68,22 @@ export default function Nav() {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  // Expand/collapse mini player
+  useEffect(() => {
+    if (audio.currentTrack) {
+      lastTrackRef.current = audio.currentTrack;
+      setPlayerMounted(true);
+      const raf = requestAnimationFrame(() =>
+        requestAnimationFrame(() => setPlayerVisible(true))
+      );
+      return () => cancelAnimationFrame(raf);
+    } else {
+      setPlayerVisible(false);
+      const t = setTimeout(() => setPlayerMounted(false), 300);
+      return () => clearTimeout(t);
+    }
+  }, [audio.currentTrack]);
 
   // Close the mobile menu when navigating
   useEffect(() => {
@@ -107,24 +156,6 @@ export default function Nav() {
     return () => root.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  const NavLink = ({ href, label }: { href: string; label: string }) => {
-    const active = pathname === href;
-    return (
-      <a
-        href={href}
-        onClick={(e) => {
-          e.preventDefault(); 
-          navigate(href);
-        }}
-        className={`rounded-md px-2 py-1 transition hover:bg-black/5 ${
-          active ? "font-semibold" : "text-black/70"
-        } ${isTransitioning ? "pointer-events-none opacity-60" : ""}`}
-      >
-        {label}
-      </a>
-    );
-  };
-
   return (
     <header ref={headerRef} className="header-ribbon border-b bg-white/20 backdrop-blur">
       <div className="mx-auto flex max-w-[70rem] lg:max-w-[133.75rem] items-center justify-between px-4 py-4 transition-[max-width] duration-700 ease-in-out">
@@ -142,26 +173,41 @@ export default function Nav() {
           >
             NICK GISH<sup className="composer-bug">COMPOSER</sup>
           </Link>
-          {audio.currentTrack && (
-            <div className="flex items-center gap-2 mt-1 border border-white/30 rounded-lg px-2 py-1 bg-white/10 backdrop-blur-sm w-fit">
-              <button
-                onClick={() => audio.isPlaying ? audio.pause() : audio.play(audio.currentTrack!)}
-                className="text-white/70 hover:text-white transition"
-                aria-label={audio.isPlaying ? "Pause" : "Play"}
-              >
-                <FontAwesomeIcon icon={audio.isPlaying ? faPause : faPlay} className="w-3 h-3" />
-              </button>
-              <span className="text-white/40 text-xs font-black uppercase tracking-widest" style={{ fontFamily: "var(--font-heading)" }}>Now Playing: </span>
-              <span className="text-white/70 text-xs font-medium truncate max-w-[180px] sm:max-w-xs" style={{ fontFamily: "var(--font-heading)" }}>
-                {audio.currentTrack.title}
-              </span>
-              <button
-                onClick={() => audio.stop()}
-                className="text-white/50 hover:text-white transition"
-                aria-label="Stop"
-              >
-                <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
-              </button>
+          {playerMounted && (
+            <div className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${playerVisible ? "[grid-template-rows:1fr] opacity-100" : "[grid-template-rows:0fr] opacity-0"}`}>
+            <div className="overflow-hidden">
+            <div className="mt-1.5 border border-white/20 rounded-lg px-3 py-1.5 bg-white/10 w-fit min-w-[220px] sm:min-w-[280px]">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => audio.isPlaying ? audio.pause() : audio.play(lastTrackRef.current!)}
+                  className="text-white/80 hover:text-white transition shrink-0"
+                  aria-label={audio.isPlaying ? "Pause" : "Play"}
+                >
+                  <FontAwesomeIcon icon={audio.isPlaying ? faPause : faPlay} className="w-2.5 h-2.5" />
+                </button>
+                <div className="flex flex-col min-w-0 gap-1">
+                  <span className="text-[9px] font-black uppercase tracking-widest leading-none" style={{ fontFamily: "var(--font-heading)", color: "#fff" }}>Now Playing</span>
+                  <span className="text-xs font-semibold truncate leading-tight" style={{ fontFamily: "var(--font-heading)", color: "#fff" }}>{lastTrackRef.current?.title}</span>
+                </div>
+                <button
+                  onClick={() => audio.stop()}
+                  className="text-white/40 hover:text-white transition shrink-0 ml-auto"
+                  aria-label="Stop"
+                >
+                  <FontAwesomeIcon icon={faXmark} className="w-2.5 h-2.5" />
+                </button>
+              </div>
+              <input
+                type="range"
+                min={0}
+                max={audio.duration || 0}
+                step={0.1}
+                value={audio.currentTime}
+                onChange={(e) => audio.seek(parseFloat(e.target.value))}
+                className="w-full h-0.5 mt-1.5 accent-white cursor-pointer"
+              />
+            </div>
+            </div>
             </div>
           )}
         </div>
@@ -169,7 +215,7 @@ export default function Nav() {
         {/* Desktop nav */}
         <nav className="hidden sm:flex flex-wrap gap-x-4 gap-y-2 text-sm">
           {nav.map((item) => (
-            <NavLink key={item.href} href={item.href} label={item.label} />
+            <NavLink key={item.href} href={item.href} label={item.label} pathname={pathname} navigate={navigate} isTransitioning={isTransitioning} />
           ))}
         </nav>
 
