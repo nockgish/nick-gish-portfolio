@@ -4,6 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRouteTransition } from "@/components/RouteTransition";
+import { useAudio } from "@/components/AudioProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faPause, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -15,6 +18,7 @@ const nav = [
 export default function Nav() {
   const pathname = usePathname();
   const { navigate, isTransitioning } = useRouteTransition();
+  const audio = useAudio();
   const [open, setOpen] = useState(false);
 
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -125,19 +129,42 @@ export default function Nav() {
     <header ref={headerRef} className="header-ribbon border-b bg-white/20 backdrop-blur">
       <div className="mx-auto flex max-w-[70rem] lg:max-w-[133.75rem] items-center justify-between px-4 py-4 transition-[max-width] duration-700 ease-in-out">
         {/* Brand (use RouteTransition for fade-out, but keep Link for prefetch) */}
-        <Link
-          href="/"
-          className={`site-title text-lg font-semibold tracking-tight ${
-            isTransitioning ? "pointer-events-none opacity-60" : ""
-          }`}
-          onClick={(e) => {
-            // Intercept to allow fade-out
-            e.preventDefault();
-            navigate("/");
-          }}
-        >
-          NICK GISH<sup className="composer-bug">COMPOSER</sup>
-        </Link>
+        <div className="flex flex-col">
+          <Link
+            href="/"
+            className={`site-title text-lg font-semibold tracking-tight ${
+              isTransitioning ? "pointer-events-none opacity-60" : ""
+            }`}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/");
+            }}
+          >
+            NICK GISH<sup className="composer-bug">COMPOSER</sup>
+          </Link>
+          {audio.currentTrack && (
+            <div className="flex items-center gap-2 mt-1 border border-white/30 rounded-lg px-2 py-1 bg-white/10 backdrop-blur-sm w-fit">
+              <button
+                onClick={() => audio.isPlaying ? audio.pause() : audio.play(audio.currentTrack!)}
+                className="text-white/70 hover:text-white transition"
+                aria-label={audio.isPlaying ? "Pause" : "Play"}
+              >
+                <FontAwesomeIcon icon={audio.isPlaying ? faPause : faPlay} className="w-3 h-3" />
+              </button>
+              <span className="text-white/40 text-xs font-black uppercase tracking-widest" style={{ fontFamily: "var(--font-heading)" }}>Now Playing: </span>
+              <span className="text-white/70 text-xs font-medium truncate max-w-[180px] sm:max-w-xs" style={{ fontFamily: "var(--font-heading)" }}>
+                {audio.currentTrack.title}
+              </span>
+              <button
+                onClick={() => audio.stop()}
+                className="text-white/50 hover:text-white transition"
+                aria-label="Stop"
+              >
+                <FontAwesomeIcon icon={faXmark} className="w-3 h-3" />
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Desktop nav */}
         <nav className="hidden sm:flex flex-wrap gap-x-4 gap-y-2 text-sm">

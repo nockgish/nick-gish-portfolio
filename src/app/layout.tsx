@@ -7,6 +7,7 @@ import { Special_Gothic } from "next/font/google";
 import BodyBackground from "@/components/BodyBackground";
 import SocialLinks from "@/components/SocialLinks";
 import { RouteFade, RouteTransitionProvider } from "@/components/RouteTransition";
+import { AudioProvider } from "@/components/AudioProvider";
 
 
 const headingFont = Red_Hat_Display({
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
      <body className={`${headingFont.variable} ${bodyFont.variable} ${oswaldFont.variable} min-h-svh flex flex-col`}>
         <BodyBackground />
 <SocialLinks />
+        <AudioProvider>
         <RouteTransitionProvider>
         <Nav />
         <main className="mx-auto w-full max-w-[70rem] lg:max-w-[133.75rem] px-4 py-6 sm:py-10 transition-[max-width] duration-700 ease-in-out flex-1"><RouteFade>{children}</RouteFade>
@@ -63,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   </div>
 </footer>
 </RouteTransitionProvider>
+        </AudioProvider>
       </body>
     </html>
   );

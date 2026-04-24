@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
+import { useAudio } from "@/components/AudioProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 
 export type Work = {
   id: string;
@@ -105,6 +108,9 @@ export default function WorkCard({ work, index = 0, eager = false }: { work: Wor
   const embedUrl = work.video_url ? getEmbedUrl(work.video_url) : null;
   const { ref, visible } = useInView<HTMLElement>();
   const [mounted, setMounted] = useState(false);
+  const audio = useAudio();
+  const isThisTrack = audio.currentTrack?.url === work.audio_url;
+  const isThisPlaying = isThisTrack && audio.isPlaying;
 
   useEffect(() => {
     if (!eager) return;
@@ -130,11 +136,17 @@ export default function WorkCard({ work, index = 0, eager = false }: { work: Wor
       </div>
 
       {work.audio_url?.startsWith("mp3s/") && (
-        <div className="mt-3">
-          <audio controls className="w-full" preload="none">
-            <source src={work.audio_url} />
-          </audio>
-        </div>
+        <button
+          onClick={() =>
+            isThisPlaying
+              ? audio.pause()
+              : audio.play({ url: work.audio_url!, title: work.title })
+          }
+          className="mt-3 flex items-center gap-2 rounded-lg bg-black/5 px-3 py-2 text-xs font-semibold text-black/70 hover:bg-black/10 transition w-full"
+        >
+          <FontAwesomeIcon icon={isThisPlaying ? faPause : faPlay} className="w-3 h-3" />
+          {isThisPlaying ? "Pause" : "Play"}
+        </button>
       )}
 
       <ScoreCover work={work} />
