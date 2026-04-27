@@ -101,6 +101,7 @@ export default function AdminPage() {
   tags: draft.tags ?? [],
   sort_order: draft.sort_order ?? 0,
   is_published: !!draft.is_published,
+  is_featured: !!draft.is_featured,
 };
 
     if (draft.id) {
@@ -214,7 +215,8 @@ export default function AdminPage() {
                                     category: "solo",
                                     tags: [],
                                     sort_order: 0,
-                                    is_published: true, })}
+                                    is_published: true,
+                                    is_featured: false, })}
           >
             New work
           </button>

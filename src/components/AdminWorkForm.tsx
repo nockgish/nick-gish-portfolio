@@ -20,6 +20,7 @@ const empty: WorkDraft = {
   tags: [],
   sort_order: 0,
   is_published: true,
+  is_featured: false,
 };
 
 export default function AdminWorkForm({
@@ -219,6 +220,15 @@ export default function AdminWorkForm({
             onChange={(e) => set("is_published", e.target.checked)}
           />
           <span className="text-sm">Published (visible on public Works page)</span>
+        </label>
+
+        <label className="flex items-center gap-2 md:col-span-2">
+          <input
+            type="checkbox"
+            checked={draft.is_featured}
+            onChange={(e) => set("is_featured", e.target.checked)}
+          />
+          <span className="text-sm">Featured (shown in Recent Works on homepage)</span>
         </label>
       </div>
 

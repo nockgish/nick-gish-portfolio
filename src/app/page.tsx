@@ -15,7 +15,7 @@ export default function HomePage() {
           <div className="flex-1 text-center sm:text-left">
             <FadeIn>
               <p className="mt-3 max-w-2xl lg:max-w-none text-3xl lg:text-5xl text-white" style={{ fontFamily: "var(--font-paracopy)" }}>
-                I am composer of many types of music, with a current focus on acoustic concert music.
+                I am a composer of many types of music, with a current focus on acoustic concert music.
               </p>
               <div className="mt-10 flex flex-wrap gap-3 justify-center sm:justify-start">
                 <TransitionLink className="rounded-xl bg-black px-4 py-3 text-sm lg:text-lg lg:px-6 lg:py-4 font-medium text-white inline-flex items-center gap-2" href="/works">

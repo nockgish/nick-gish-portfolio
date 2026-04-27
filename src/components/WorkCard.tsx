@@ -23,6 +23,7 @@ export type Work = {
   tags: string[] | null;
   sort_order: number | null;
   is_published: boolean;
+  is_featured: boolean;
 };
 
 function LinkRow({ label, href }: { label: string; href: string | null }) {

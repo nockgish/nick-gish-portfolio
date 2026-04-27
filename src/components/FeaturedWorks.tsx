@@ -3,32 +3,15 @@ import { Work } from "@/components/WorkCard";
 import WorkCard from "@/components/WorkCard";
 import TransitionLink from "@/components/TransitionLink";
 
-const CATEGORIES: { key: Work["category"]; label: string }[] = [
-  { key: "large_ensemble", label: "Large Ensemble" },
-  { key: "chamber", label: "Chamber" },
-  { key: "solo", label: "Solo" },
-  { key: "chorus", label: "Choral" },
-];
-
 export default async function FeaturedWorks() {
-  const results = await Promise.all(
-    CATEGORIES.map(({ key }) =>
-      supabaseServer
-        .from("works")
-        .select("*")
-        .eq("is_published", true)
-        .eq("category", key)
-        .order("year", { ascending: false })
-        .order("sort_order", { ascending: false })
-        .order("created_at", { ascending: false })
-        .limit(1)
-        .single()
-    )
-  );
+  const { data } = await supabaseServer
+    .from("works")
+    .select("*")
+    .eq("is_published", true)
+    .eq("is_featured", true)
+    .order("sort_order", { ascending: true });
 
-  const works = results
-    .map((r) => r.data as Work | null)
-    .filter(Boolean) as Work[];
+  const works = (data ?? []) as Work[];
 
   if (!works.length) return null;
 
