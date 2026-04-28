@@ -9,20 +9,25 @@ type AudioCtx = {
   isPlaying: boolean;
   currentTime: number;
   duration: number;
+  analyserNode: AnalyserNode | null;
   play: (track: Track) => void;
   pause: () => void;
   stop: () => void;
   seek: (time: number) => void;
 };
 
-const AudioContext = createContext<AudioCtx | null>(null);
+type WebAudio = { ctx: { resume: () => Promise<void> }; analyser: AnalyserNode };
+
+const AudioPlayerContext = createContext<AudioCtx | null>(null);
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const webAudioRef = useRef<WebAudio | null>(null);
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
 
   useEffect(() => {
     const audio = new Audio();
@@ -47,9 +52,28 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  function initWebAudio() {
+    if (webAudioRef.current || !audioRef.current) return;
+    try {
+      const ctx = new AudioContext();
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.8;
+      const source = ctx.createMediaElementSource(audioRef.current);
+      source.connect(analyser);
+      analyser.connect(ctx.destination);
+      webAudioRef.current = { ctx, analyser };
+      setAnalyserNode(analyser);
+    } catch (e) {
+      console.warn("AudioVisualizer: could not init Web Audio", e);
+    }
+  }
+
   function play(track: Track) {
     const audio = audioRef.current;
     if (!audio) return;
+    initWebAudio();
+    webAudioRef.current?.ctx.resume();
     if (currentTrack?.url !== track.url) {
       audio.src = track.url;
       setCurrentTrack(track);
@@ -80,14 +104,14 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AudioContext.Provider value={{ currentTrack, isPlaying, currentTime, duration, play, pause, stop, seek }}>
+    <AudioPlayerContext.Provider value={{ currentTrack, isPlaying, currentTime, duration, analyserNode, play, pause, stop, seek }}>
       {children}
-    </AudioContext.Provider>
+    </AudioPlayerContext.Provider>
   );
 }
 
 export function useAudio() {
-  const ctx = useContext(AudioContext);
+  const ctx = useContext(AudioPlayerContext);
   if (!ctx) throw new Error("useAudio must be used within <AudioProvider>");
   return ctx;
 }

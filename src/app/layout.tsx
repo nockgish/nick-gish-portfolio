@@ -36,6 +36,9 @@ const bodyFont = Special_Gothic({
 export const metadata = {
   title: "Nick Gish — Composer",
   description: "Portfolio and catalog of works for composer Nick Gish",
+};
+
+export const viewport = {
   themeColor: "#1a2e25",
 };
 

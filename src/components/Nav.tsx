@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRouteTransition } from "@/components/RouteTransition";
 import { useAudio } from "@/components/AudioProvider";
+import AudioVisualizer from "@/components/AudioVisualizer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause, faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -176,7 +177,8 @@ export default function Nav() {
           {playerMounted && (
             <div className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${playerVisible ? "[grid-template-rows:1fr] opacity-100" : "[grid-template-rows:0fr] opacity-0"}`}>
             <div className="overflow-hidden">
-            <div className="mt-1.5 border border-white/20 rounded-lg px-3 py-1.5 bg-white/10 w-fit min-w-[220px] sm:min-w-[280px]">
+            <div className="mt-1.5 flex items-center gap-3 w-full">
+            <div className="border border-white/20 rounded-lg px-3 py-1.5 bg-white/10 w-fit min-w-[220px] sm:min-w-[280px]">
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => audio.isPlaying ? audio.pause() : audio.play(lastTrackRef.current!)}
@@ -206,6 +208,8 @@ export default function Nav() {
                 onChange={(e) => audio.seek(parseFloat(e.target.value))}
                 className="w-full h-0.5 mt-1.5 accent-white cursor-pointer"
               />
+            </div>
+            <AudioVisualizer className="flex-1 self-end" />
             </div>
             </div>
             </div>

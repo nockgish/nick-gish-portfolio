@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <div className="grid gap-8">
       <section className="intro_box pl-0 pr-2 py-8 lg:py-20">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:gap-4 lg:gap-16 lg:max-w-7xl lg:mx-auto">
+        <div className="relative flex flex-col sm:flex-row sm:items-start sm:gap-4 lg:gap-16 lg:max-w-7xl lg:mx-auto">
           <div className="flex-1 text-center sm:text-left">
             <FadeIn>
               <p className="mt-3 max-w-2xl lg:max-w-none text-3xl lg:text-5xl text-white" style={{ fontFamily: "var(--font-paracopy)" }}>
