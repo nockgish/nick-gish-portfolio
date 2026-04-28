@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouteTransition } from "@/components/RouteTransition";
 import { useAudio } from "@/components/AudioProvider";
 import AudioVisualizer from "@/components/AudioVisualizer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPause, faXmark, faVolumeHigh, faVolumeLow, faVolumeOff } from "@fortawesome/free-solid-svg-icons";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -53,6 +54,10 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [playerMounted, setPlayerMounted] = useState(false);
   const [playerVisible, setPlayerVisible] = useState(false);
+  const [volumeOpen, setVolumeOpen] = useState(false);
+  const [volumeRect, setVolumeRect] = useState<DOMRect | null>(null);
+  const volumeBtnRef = useRef<HTMLButtonElement>(null);
+  const volumeDropdownRef = useRef<HTMLDivElement>(null);
   const lastTrackRef = useRef(audio.currentTrack);
 
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -69,6 +74,19 @@ export default function Nav() {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  // Close volume dropdown on outside click
+  useEffect(() => {
+    if (!volumeOpen) return;
+    const onPointerDown = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (!volumeBtnRef.current?.contains(t) && !volumeDropdownRef.current?.contains(t)) {
+        setVolumeOpen(false);
+      }
+    };
+    window.addEventListener("pointerdown", onPointerDown);
+    return () => window.removeEventListener("pointerdown", onPointerDown);
+  }, [volumeOpen]);
 
   // Expand/collapse mini player
   useEffect(() => {
@@ -157,7 +175,7 @@ export default function Nav() {
     return () => root.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  return (
+  return (<>
     <header ref={headerRef} className="header-ribbon border-b bg-white/20 backdrop-blur">
       <div className="mx-auto flex max-w-[70rem] lg:max-w-[133.75rem] items-center justify-between px-4 py-4 transition-[max-width] duration-700 ease-in-out">
         {/* Brand (use RouteTransition for fade-out, but keep Link for prefetch) */}
@@ -192,8 +210,22 @@ export default function Nav() {
                   <span className="text-xs font-semibold truncate leading-tight" style={{ fontFamily: "var(--font-heading)", color: "#fff" }}>{lastTrackRef.current?.title}</span>
                 </div>
                 <button
-                  onClick={() => audio.stop()}
+                  ref={volumeBtnRef}
+                  onClick={() => {
+                    if (!volumeOpen) setVolumeRect(volumeBtnRef.current?.getBoundingClientRect() ?? null);
+                    setVolumeOpen((v) => !v);
+                  }}
                   className="text-white/40 hover:text-white transition shrink-0 ml-auto"
+                  aria-label="Volume"
+                >
+                  <FontAwesomeIcon
+                    icon={audio.volume === 0 ? faVolumeOff : audio.volume < 0.5 ? faVolumeLow : faVolumeHigh}
+                    className="w-2.5 h-2.5"
+                  />
+                </button>
+                <button
+                  onClick={() => audio.stop()}
+                  className="text-white/40 hover:text-white transition shrink-0"
                   aria-label="Stop"
                 >
                   <FontAwesomeIcon icon={faXmark} className="w-2.5 h-2.5" />
@@ -283,5 +315,31 @@ export default function Nav() {
         </nav>
       </div>
     </header>
-  );
+
+    {volumeOpen && volumeRect && createPortal(
+      <div
+        ref={volumeDropdownRef}
+        style={{
+          position: "fixed",
+          top: volumeRect.bottom + 8,
+          left: volumeRect.left + volumeRect.width / 2,
+          transform: "translateX(-50%)",
+          zIndex: 9999,
+        }}
+        className="flex flex-col items-center rounded-lg border border-white/20 bg-white/10 backdrop-blur-sm px-2.5 py-3"
+      >
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.01}
+          value={audio.volume}
+          onChange={(e) => audio.setVolume(parseFloat(e.target.value))}
+          className="accent-white cursor-pointer"
+          style={{ writingMode: "vertical-lr", direction: "rtl", height: "80px" }}
+        />
+      </div>,
+      document.body
+    )}
+  </>);
 }

@@ -9,11 +9,13 @@ type AudioCtx = {
   isPlaying: boolean;
   currentTime: number;
   duration: number;
+  volume: number;
   analyserNode: AnalyserNode | null;
   play: (track: Track) => void;
   pause: () => void;
   stop: () => void;
   seek: (time: number) => void;
+  setVolume: (vol: number) => void;
 };
 
 type WebAudio = { ctx: { resume: () => Promise<void> }; analyser: AnalyserNode };
@@ -28,6 +30,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
+  const [volume, setVolumeState] = useState(1);
 
   useEffect(() => {
     const audio = new Audio();
@@ -103,8 +106,15 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     setCurrentTime(time);
   }
 
+  function setVolume(vol: number) {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = vol;
+    setVolumeState(vol);
+  }
+
   return (
-    <AudioPlayerContext.Provider value={{ currentTrack, isPlaying, currentTime, duration, analyserNode, play, pause, stop, seek }}>
+    <AudioPlayerContext.Provider value={{ currentTrack, isPlaying, currentTime, duration, volume, analyserNode, play, pause, stop, seek, setVolume }}>
       {children}
     </AudioPlayerContext.Provider>
   );

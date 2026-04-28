@@ -77,11 +77,14 @@ export default function AudioVisualizer({ className }: { className?: string }) {
       const data = new Uint8Array(analyserNode.frequencyBinCount);
       analyserNode.getByteFrequencyData(data);
 
-      const usableBins = Math.floor(data.length * 0.6);
+      const usableBins = Math.floor(data.length * 0.5);
       const points: number[] = [];
       for (let i = 0; i < POINTS; i++) {
+        const t = i / (POINTS - 1); // 0 = low freq, 1 = high freq
         const idx = Math.floor((i / POINTS) * usableBins);
-        const amplified = Math.min(1, (data[idx] / 255) * 1.1);
+        const raw = data[idx] / 255;
+        const boost = 1 + t * 2.0;
+        const amplified = Math.min(1, raw * 0.85 * boost);
         points.push(amplified * H);
       }
 
