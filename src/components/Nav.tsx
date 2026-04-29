@@ -8,7 +8,7 @@ import { useRouteTransition } from "@/components/RouteTransition";
 import { useAudio } from "@/components/AudioProvider";
 import AudioVisualizer from "@/components/AudioVisualizer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faXmark, faVolumeHigh, faVolumeLow, faVolumeOff } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPause, faXmark, faVolumeHigh, faVolumeLow, faVolumeOff, faExpand, faCompress } from "@fortawesome/free-solid-svg-icons";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -55,6 +55,7 @@ export default function Nav() {
   const [playerMounted, setPlayerMounted] = useState(false);
   const [playerVisible, setPlayerVisible] = useState(false);
   const [volumeOpen, setVolumeOpen] = useState(false);
+  const [isVizExpanded, setIsVizExpanded] = useState(false);
   const [volumeRect, setVolumeRect] = useState<DOMRect | null>(null);
   const volumeBtnRef = useRef<HTMLButtonElement>(null);
   const volumeDropdownRef = useRef<HTMLDivElement>(null);
@@ -99,6 +100,7 @@ export default function Nav() {
       return () => cancelAnimationFrame(raf);
     } else {
       setPlayerVisible(false);
+      setIsVizExpanded(false);
       const t = setTimeout(() => setPlayerMounted(false), 300);
       return () => clearTimeout(t);
     }
@@ -241,7 +243,18 @@ export default function Nav() {
                 className="w-full h-0.5 mt-1.5 accent-white cursor-pointer"
               />
             </div>
-            <AudioVisualizer className="flex-1 self-end" />
+            {!isVizExpanded && (
+              <div className="hidden sm:flex flex-1 items-end gap-1.5 self-end">
+                <AudioVisualizer className="flex-1" />
+                <button
+                  onClick={() => setIsVizExpanded(true)}
+                  className="text-white/40 hover:text-white transition shrink-0 pb-0.5"
+                  aria-label="Expand visualizer"
+                >
+                  <FontAwesomeIcon icon={faExpand} className="w-2.5 h-2.5" />
+                </button>
+              </div>
+            )}
             </div>
             </div>
             </div>
@@ -282,6 +295,24 @@ export default function Nav() {
           </div>
         </button>
       </div>
+
+      {/* Expanded visualizer row */}
+      {playerMounted && (
+        <div className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${isVizExpanded ? "[grid-template-rows:1fr] opacity-100" : "[grid-template-rows:0fr] opacity-0"}`}>
+          <div className="overflow-hidden flex flex-col justify-end">
+            <div className="relative w-full">
+              <AudioVisualizer className="w-full block" height={80} />
+              <button
+                onClick={() => setIsVizExpanded(false)}
+                className="absolute right-3 bottom-2 text-white/40 hover:text-white transition"
+                aria-label="Collapse visualizer"
+              >
+                <FontAwesomeIcon icon={faCompress} className="w-2.5 h-2.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mobile menu panel */}
       <div

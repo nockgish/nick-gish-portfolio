@@ -143,9 +143,9 @@ export default function WorkCard({ work, index = 0, eager = false }: { work: Wor
               ? audio.pause()
               : audio.play({ url: work.audio_url!, title: work.title })
           }
-          className="mt-3 flex items-center gap-2 rounded-lg bg-black/5 px-3 py-2 text-xs font-semibold text-black/70 hover:bg-black/10 transition w-full"
+          className="mt-3 flex items-center gap-2 rounded-lg bg-black/5 border border-white/60 px-3 py-2 text-xs font-semibold text-black/70 hover:bg-black/10 transition w-full"
         >
-          <FontAwesomeIcon icon={isThisPlaying ? faPause : faPlay} className="w-3 h-3" />
+          <FontAwesomeIcon icon={isThisPlaying ? faPause : faPlay} className="w-3 h-3" style={{ color: "#3dbb72" }} />
           {isThisPlaying ? "Pause" : "Play"}
         </button>
       )}
