@@ -19,7 +19,7 @@ function pickBackground(pathname: string): BgConfig {
     return { image: "/images/greens.jpg" };
   }
   // home
-  return { image: "/images/back1.jpg"}; 
+  return { image: "/images/back1.jpg"};
 }
 
 export default function BodyBackground({
@@ -37,6 +37,19 @@ export default function BodyBackground({
   const [a, setA] = useState<BgConfig>(next);
   const [b, setB] = useState<BgConfig | null>(null);
   const [showB, setShowB] = useState(false);
+  const [aLoaded, setALoaded] = useState(false);
+
+  const [showLoader, setShowLoader] = useState(true);
+
+  // Preload the initial background and fade it in once ready
+  useEffect(() => {
+    const img = new Image();
+    img.src = next.image;
+    img.onload = () => {
+      requestAnimationFrame(() => setALoaded(true));
+      setTimeout(() => setShowLoader(false), 600);
+    };
+  }, []);
 
  useEffect(() => {
   if (next.image === a.image) return;
@@ -70,44 +83,74 @@ export default function BodyBackground({
   const transition = `opacity ${durationMs}ms ease`;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-0 -z-10" style={{ bottom: '-100px' }}>
-      {/* Layer A */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${a.image})` }}
-      />
-      {a.overlay ? (
+    <>
+      {/* Loading indicator */}
+      {showLoader && (
         <div
-          className={`absolute inset-0 ${a.overlay}`}
-          style={{ backdropFilter: `blur(${blurPx}px)` }}
-        />
-      ) : null}
-
-      {/* Layer B (incoming) */}
-      {b ? (
-        <>
-          <div
-            className="absolute inset-0 bg-cover bg-center"
+          className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center"
+          style={{ opacity: aLoaded ? 0 : 1, transition: "opacity 600ms ease" }}
+        >
+          <span
             style={{
-              backgroundImage: `url(${b.image})`,
-              opacity: showB ? 1 : 0,
-              transition,
-transform: showB ? "scale(1)" : "scale(1.03)",
-filter: showB ? "blur(0px)" : "blur(10px)",
+              fontFamily: "var(--font-heading)",
+              fontWeight: 700,
+              fontSize: "1rem",
+              color: "rgba(255,255,255,0.7)",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
             }}
+          >
+            Loading
+            <span className="loading-dots">
+              <span>.</span><span>.</span><span>.</span>
+            </span>
+          </span>
+        </div>
+      )}
+
+      <div className="pointer-events-none fixed inset-x-0 top-0 -z-10" style={{ bottom: '-100px' }}>
+        {/* Layer A */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${a.image})`,
+            opacity: aLoaded ? 1 : 0,
+            transition: `opacity ${durationMs}ms ease`,
+          }}
+        />
+        {a.overlay ? (
+          <div
+            className={`absolute inset-0 ${a.overlay}`}
+            style={{ backdropFilter: `blur(${blurPx}px)` }}
           />
-          {b.overlay ? (
+        ) : null}
+
+        {/* Layer B (incoming) */}
+        {b ? (
+          <>
             <div
-              className={`absolute inset-0 ${b.overlay}`}
+              className="absolute inset-0 bg-cover bg-center"
               style={{
+                backgroundImage: `url(${b.image})`,
                 opacity: showB ? 1 : 0,
                 transition,
-                backdropFilter: `blur(${blurPx}px)`,
+                transform: showB ? "scale(1)" : "scale(1.03)",
+                filter: showB ? "blur(0px)" : "blur(10px)",
               }}
             />
-          ) : null}
-        </>
-      ) : null}
-    </div>
+            {b.overlay ? (
+              <div
+                className={`absolute inset-0 ${b.overlay}`}
+                style={{
+                  opacity: showB ? 1 : 0,
+                  transition,
+                  backdropFilter: `blur(${blurPx}px)`,
+                }}
+              />
+            ) : null}
+          </>
+        ) : null}
+      </div>
+    </>
   );
 }

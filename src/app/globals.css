@@ -129,13 +129,12 @@ color: #eee;
   font-weight: 900;
   font-size: 5.5vw;
   letter-spacing: 0.5rem;
-  text-shadow: 0  0 2px rgba(0, 0, 0, 0.255);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.255);
   transition: 0.3s ease-in-out;
   color: #ffffff;
 }
 
 .site-title:hover {
-  
   text-shadow: 0px 0px 3px #ffffff6b;
 }
 
@@ -149,6 +148,17 @@ color: #eee;
   top: 0;
   z-index: 1000;
 }
+
+@keyframes dot-fade {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+.loading-dots span {
+  animation: dot-fade 1.4s infinite ease-in-out;
+}
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
 
 .admin_link {
   text-transform: uppercase;
