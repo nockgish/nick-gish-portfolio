@@ -74,7 +74,7 @@ export default function BodyBackground({
           }
         }
 
-        objectUrl = URL.createObjectURL(new Blob(chunks, { type: "image/jpeg" }));
+        objectUrl = URL.createObjectURL(new Blob(chunks as BlobPart[], { type: "image/jpeg" }));
         setBgUrl(objectUrl);
         setProgress(100);
         setLoaderFading(true);                              // 1. fade loader out
