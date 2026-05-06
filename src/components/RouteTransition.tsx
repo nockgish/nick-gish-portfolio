@@ -4,6 +4,7 @@ import React, {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -67,15 +68,23 @@ export function RouteFade({ children }: { children: React.ReactNode }) {
   const { isTransitioning, durationMs } = useRouteTransition();
 
   const [opacity, setOpacity] = useState(0);
+  const isInitialMount = useRef(true);
 
-  // Fade out immediately on click (cosmetic only — navigation already in flight).
   useEffect(() => {
     if (isTransitioning) setOpacity(0);
   }, [isTransitioning]);
 
-  // Fade in after route change.
   useEffect(() => {
     setOpacity(0);
+
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      // On initial load, wait for BodyBackground to signal it's ready
+      const onReady = () => requestAnimationFrame(() => setOpacity(1));
+      window.addEventListener("siteready", onReady, { once: true });
+      return () => window.removeEventListener("siteready", onReady);
+    }
+
     const raf = requestAnimationFrame(() => setOpacity(1));
     return () => cancelAnimationFrame(raf);
   }, [pathname]);
