@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 type BgConfig = {
@@ -30,6 +30,7 @@ export default function BodyBackground({
   const [showB, setShowB] = useState(false);
   const [aLoaded, setALoaded] = useState(false);
   const [bgUrl, setBgUrl] = useState<string | null>(null);
+  const bgUrlForImage = useRef<string>(next.image); // tracks which image the blob URL is for
 
   const [progress, setProgress] = useState(0);
   const [showLoader, setShowLoader] = useState(true);
@@ -75,6 +76,7 @@ export default function BodyBackground({
         }
 
         objectUrl = URL.createObjectURL(new Blob(chunks as BlobPart[], { type: "image/jpeg" }));
+        bgUrlForImage.current = next.image;
         setBgUrl(objectUrl);
         setProgress(100);
         setLoaderFading(true);                              // 1. fade loader out
@@ -116,12 +118,14 @@ export default function BodyBackground({
       if (cancelled) return;
       setB(next);
       requestAnimationFrame(() => setShowB(true));
-      const t = window.setTimeout(() => {
+      window.setTimeout(() => {
         setA(next);
-        setB(null);
-        setShowB(false);
+        // Wait one frame for layer A to paint before removing layer B
+        requestAnimationFrame(() => {
+          setB(null);
+          setShowB(false);
+        });
       }, durationMs);
-      return () => window.clearTimeout(t);
     };
 
     return () => { cancelled = true; };
@@ -174,7 +178,7 @@ export default function BodyBackground({
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url(${bgUrl ?? a.image})`,
+            backgroundImage: `url(${bgUrl && bgUrlForImage.current === a.image ? bgUrl : a.image})`,
             opacity: aLoaded ? 1 : 0,
             transition: `opacity ${durationMs}ms ease`,
           }}
