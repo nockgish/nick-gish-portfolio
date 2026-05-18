@@ -1,5 +1,6 @@
 import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
+import BioPhoto from "@/components/BioPhoto";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,15 +25,7 @@ export default function BioPage() {
         <div>
           <div className="grid md:grid-cols-2 gap-16 items-center mb-8 mt-10">
           <FadeIn>
-          <div className="relative overflow-hidden pic-of-me aspect-[3/4]">
-          <Image
-          src="/images/ng.jpg"
-          alt="Image of Nick"
-          fill
-          className="object-cover object-top"
-          sizes="(min-width: 200px) 50vw, 100vw"
-          />
-          </div>
+          <BioPhoto />
           </FadeIn>
           <FadeIn delay={100} className="space-y-8">
              <p className="first-big">

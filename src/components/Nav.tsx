@@ -8,7 +8,7 @@ import { useRouteTransition } from "@/components/RouteTransition";
 import { useAudio } from "@/components/AudioProvider";
 import AudioVisualizer from "@/components/AudioVisualizer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faXmark, faVolumeHigh, faVolumeLow, faVolumeOff, faExpand, faCompress } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPause, faXmark, faVolumeHigh, faVolumeLow, faVolumeOff, faUpRightAndDownLeftFromCenter, faDownLeftAndUpRightToCenter } from "@fortawesome/free-solid-svg-icons";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -251,7 +251,7 @@ export default function Nav() {
                   className="text-white/40 hover:text-white transition shrink-0 pb-0.5"
                   aria-label="Expand visualizer"
                 >
-                  <FontAwesomeIcon icon={faExpand} className="w-2.5 h-2.5" />
+                  <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} className="w-2.5 h-2.5" />
                 </button>
               </div>
             )}
@@ -307,7 +307,7 @@ export default function Nav() {
                 className="absolute right-3 bottom-2 text-white/40 hover:text-white transition"
                 aria-label="Collapse visualizer"
               >
-                <FontAwesomeIcon icon={faCompress} className="w-2.5 h-2.5" />
+                <FontAwesomeIcon icon={faDownLeftAndUpRightToCenter} className="w-2.5 h-2.5" />
               </button>
             </div>
           </div>

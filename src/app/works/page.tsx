@@ -9,10 +9,12 @@ function Section({
   id,
   title,
   items,
+  eagerCount = 0,
 }: {
   id: string;
   title: string;
   items: Work[];
+  eagerCount?: number;
 }) {
   if (!items.length) return null;
 
@@ -21,7 +23,7 @@ function Section({
       <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
       <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4">
         {items.map((w, i) => (
-          <WorkCard key={w.id} work={w} index={i} />
+          <WorkCard key={w.id} work={w} index={i} eager={i < eagerCount} />
         ))}
       </div>
     </section>
@@ -221,7 +223,7 @@ export default function WorksPage() {
           <p className="text-sm text-black/70">No works found.</p>
         ) : (
           <div className="grid gap-10">
-            <Section id="solo" title="Solo" items={grouped.solo} />
+            <Section id="solo" title="Solo" items={grouped.solo} eagerCount={4} />
             <Section id="chamber" title="Chamber" items={grouped.chamber} />
             <Section id="large-ensemble" title="Large Ensemble" items={grouped.large_ensemble} />
             <Section id="choral" title="Choral" items={grouped.chorus} />

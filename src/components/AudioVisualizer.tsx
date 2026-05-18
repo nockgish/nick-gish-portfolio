@@ -164,7 +164,7 @@ export default function AudioVisualizer({ className, height = 56, threed = false
         const raw = data[idx] / 255;
         const boost = 1 + t * 2.0;
         const amplified = Math.min(1, raw * 0.85 * boost);
-        points.push(amplified * (H * 0.88)); // leave headroom for 3D extrusion top
+        points.push(amplified * (H * 0.88));
       }
 
       if (threed) {
