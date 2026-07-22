@@ -7,6 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faItunesNote } from "@fortawesome/free-brands-svg-icons";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 
+// Rendered per-request so featured/published changes made in admin appear immediately
+// (admin writes to Supabase client-side, so there's no server action to revalidate on).
+export const dynamic = "force-dynamic";
+
 export default function HomePage() {
   return (
     <div className="grid gap-8">
